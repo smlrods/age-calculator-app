@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,400;1,800&display=swap');
+// primary
+$purple: hsl(259, 100%, 65%);
+$light-red: hsl(0, 100%, 67%);
+// neutral
+$white: hsl(0, 0%, 100%);
+$off-white: hsl(0, 0%, 94%);
+$light-grey: hsl(0, 0%, 86%);
+$smokey-grey: hsl(0, 1%, 44%);
+$off-black: hsl(0, 0%, 8%);
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.App {
+  background-color: $white;
+  padding: 50px;
+  border-radius: 3% 3% 30% 3%;
+  user-select: none;
+  width: 800px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 32px;
+}
+
+input {
+  font-size: 32px;
+}
+
+.input > {
+  div:first-child {
+    display: flex;
+    justify-content: start;
+    gap: 30px;
+    color: $smokey-grey;
+    margin-bottom: 45px;
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    input {
+      padding: 15px 20px;
+      font-weight: 700;
+      border: 1px solid $light-grey;
+      border-radius: 5px;
+      width: 150px;
+      cursor: pointer;
+      margin: 8px 0;
+      font-family: 'Poppins', sans-serif;
+      line-height: 33px;
+    }
+
+    input:focus {
+      outline: 1px solid $purple;
+    }
+  }
+
+  .submit {
+    position: relative;
+    border-bottom: 1px solid $light-grey;
+
+    .arrowIcon {
+      position: absolute;
+      right: 0px;
+      transform: translate(0, -50%);
+      padding: 45px;
+      border-radius: 50%;
+      background-image: url('./images/icon-arrow.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: $purple;
+      cursor: pointer;
+    }
+
+    .arrowIcon:hover {
+      background-color: $off-black;
+    }
+  }
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+
+  .result-row {
+    font-size: 3em;
+    font-style: italic;
+    font-weight: 800;
+    height: min-content;
+    line-height: 1.1;
+  }
+
+  span {
+    color: $purple;
+    font-weight: 700;
+  }
+}
+
+.error {
+  color: $light-red !important;
+
+  input {
+    color: $light-red;
+    border: 1px solid $light-red !important;
+  }
+
+  .error-msg {
+    font-size: 0.4em;
+    font-weight: 400;
+    font-style: italic;
+  }
+}

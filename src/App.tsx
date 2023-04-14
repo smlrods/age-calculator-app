@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import './App.sass'
+import './App.scss'
+import arrowIcon from './images/icon-arrow.svg';
 
 function App() {
   const [days, setDays] = useState<number>();
@@ -17,9 +18,15 @@ function App() {
 function Result({days, months, years}: {days: number | undefined, months: number | undefined, years: number | undefined}) {
   return (
     <div className='result'>
-      {years ? years : '--'} years
-      {months ? months : '--'} months
-      {days ? days : '--'} days
+      <div className='result-row'>
+        {years ? <span>{years}</span> : <span>- -</span>} years
+      </div>
+      <div className='result-row'>
+        {months ? <span>{months}</span> : <span>- -</span>} months
+      </div>
+      <div className='result-row'>
+        {days ? <span>{days}</span> : <span>- -</span>} days
+      </div>
     </div>
   );
 }
@@ -44,7 +51,8 @@ function Input({setDays, setMonths, setYears}: {setDays: React.Dispatch<React.Se
     return date.getFullYear() == year && date.getMonth() + 1 == month && date.getDate() == day;
   }
 
-  function calculateAge(inputDays: number, inputMonths: number, inputYears: number) {
+  function calculateAge(inputDays: number | undefined, inputMonths: number | undefined, inputYears: number | undefined) {
+    if (!(inputDays && inputMonths && inputYears)) return;
     const now = new Date();
 
     const years = now.getFullYear() - inputYears;
@@ -62,7 +70,7 @@ function Input({setDays, setMonths, setYears}: {setDays: React.Dispatch<React.Se
     }
   }
 
-  function validateForm(inputDay: number, inputMonth: number, inputYear: number): boolean {
+  function validateForm(inputDay: number | undefined, inputMonth: number | undefined, inputYear: number | undefined): boolean {
     const newErrors = {day: '', month: '', year: '', date: ''};
     const date = new Date(`${inputYear}-${inputMonth}-${inputDay}`);
     if ((inputDay && inputMonth && inputYear) &&
@@ -98,8 +106,8 @@ function Input({setDays, setMonths, setYears}: {setDays: React.Dispatch<React.Se
 
   return (
     <div className='input'>
-      <div>
-        <div>
+      <div className={formErrors.date ? 'error' : ''}>
+        <div className={formErrors.day ? 'error' : ''}>
           <label htmlFor="day">Day</label>
           <input type='number' placeholder='DD' id='day' min={1} max={31} onChange={(e) => {
           if (e.target.value === '') {
@@ -108,10 +116,10 @@ function Input({setDays, setMonths, setYears}: {setDays: React.Dispatch<React.Se
             setInputDay(+e.target.value)}
           }
           } />
-          {formErrors.day && <div>{formErrors.day}</div>}
-          {formErrors.date && <div>{formErrors.date}</div>}
+          {formErrors.day && <div className='error-msg'>{formErrors.day}</div>}
+          {formErrors.date && <div className='error-msg'>{formErrors.date}</div>}
         </div>
-        <div>
+        <div className={formErrors.month ? 'error' : ''}>
           <label htmlFor="month">Month</label>
           <input type='number' placeholder='MM' id='month' min={1} max={12} onChange={(e) => {
           if (e.target.value === '') {
@@ -120,9 +128,9 @@ function Input({setDays, setMonths, setYears}: {setDays: React.Dispatch<React.Se
             setInputMonth(+e.target.value);
           }
           }} />
-          {formErrors.month && <div>{formErrors.month}</div>}
+          {formErrors.month && <div className='error-msg'>{formErrors.month}</div>}
         </div>
-        <div>
+        <div className={formErrors.year ? 'error' : ''}>
           <label htmlFor="year">Year</label>
           <input type='number' placeholder='YYYY' id='year' min={1} max={new Date().getFullYear()} onChange={(e) => {
           if (e.target.value === '') {
@@ -131,12 +139,12 @@ function Input({setDays, setMonths, setYears}: {setDays: React.Dispatch<React.Se
             setInputYear(+e.target.value);
           }
           }} />
-          {formErrors.year && <div>{formErrors.year}</div>}
+          {formErrors.year && <div className='error-msg'>{formErrors.year}</div>}
         </div>
       </div>
-      <div>
-        <button onClick={() => {
-          if(inputDay && inputMonth && inputYear && validateForm(inputDay, inputMonth, inputYear)) {
+      <div className='submit'>
+        <div className='arrowIcon' onClick={() => {
+          if(validateForm(inputDay, inputMonth, inputYear)) {
             calculateAge(inputDay, inputMonth, inputYear) 
             return;
           }
@@ -144,7 +152,7 @@ function Input({setDays, setMonths, setYears}: {setDays: React.Dispatch<React.Se
           setDays(undefined);
           setMonths(undefined);
           setYears(undefined);
-        }}>Submit</button>
+        }}></div>
       </div>
     </div>
   );

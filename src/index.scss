@@ -1,0 +1,14 @@
+$off-white: hsl(0, 0%, 94%);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: $off-white;
+}
